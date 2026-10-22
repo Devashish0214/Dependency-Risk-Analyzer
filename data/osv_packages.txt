@@ -1,0 +1,3 @@
+npm lodash 4.17.20
+npm axios 0.21.0
+npm express 4.17.1

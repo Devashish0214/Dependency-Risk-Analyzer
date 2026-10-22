@@ -1,0 +1,44 @@
+
+# Compiled programs
+*.exe
+*.o
+*.obj
+*.dll
+
+# Temporary files and logs
+*.log
+*.tmp
+temp/
+tmp/
+
+# Private keys and credentials
+keys/
+*.pem
+*.key
+.env
+.env.*
+
+# Python cache and virtual environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+# Exclude nested duplicate project folder
+DependencyRiskAnalyzer/
+
+# Exclude backup source files
+main_*_backup.cpp
+main_before_*.cpp
+main_broken_backup.cpp
+main_incomplete_backup.cpp
+RiskEngine_step1_backup.cpp
+
+# Exclude temporary test data
+data/test_*
+data/osv_request.json
+data/osv_response.json

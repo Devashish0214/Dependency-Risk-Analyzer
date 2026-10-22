@@ -1,0 +1,6 @@
+Project React
+Project Express
+React Axios
+React Lodash
+Express Lodash
+Axios OpenSSL

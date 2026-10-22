@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101827">
+    <title>SecureLens | Dependency Risk Analyzer</title>
+    <link rel="stylesheet" href="/frontend/style.css">
+    <script src="/frontend/app.js" defer></script>
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                <span class="brand-icon">S</span>
+                <span>SecureLens<small>DEPENDENCY INTELLIGENCE</small></span>
+            </a>
+
+            <div class="nav-label">WORKSPACE</div>
+            <a class="nav-item active" href="#overview">▦ &nbsp; Overview</a>
+            <a class="nav-item" href="#upload">⇧ &nbsp; Analyze project</a>
+            <a class="nav-item" href="#report">▤ &nbsp; Analysis report</a>
+
+            <div class="sidebar-bottom">
+                <span class="status-dot"></span>
+                <span>Local analysis engine</span>
+                <small> C++ · OSV API</small>
+            </div>
+        </aside>
+
+        <main class="main-content" id="overview">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">SOFTWARE SUPPLY CHAIN SECURITY</p>
+                    <h1>Dependency Risk Analyzer</h1>
+                    <p class="subtitle">Understand package vulnerabilities and dependency risk.</p>
+                </div>
+                <div class="system-status">
+                    <span class="status-dot"></span>
+                    <span id="connection-status">Checking backend...</span>
+                </div>
+            </header>
+
+            <section class="welcome-panel">
+                <div>
+                    <span class="pill">C++ DATA STRUCTURES + OSV</span>
+                    <h2>Know what your project depends on.</h2>
+                    <p>Run your existing dependency analyzer and review its findings in one place.</p>
+                    <a class="primary-button" href="#upload">Start an analysis <span>→</span></a>
+                </div>
+                <div class="hero-graphic" aria-hidden="true">
+                    <div class="orbit orbit-one"></div>
+                    <div class="orbit orbit-two"></div>
+                    <div class="core">S</div>
+                    <span class="node node-one">NPM</span>
+                    <span class="node node-two">C++</span>
+                    <span class="node node-three">OSV</span>
+                    <span class="node node-four">DSA</span>
+                </div>
+            </section>
+
+            <section class="section" id="upload">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">ANALYSIS INPUT</p>
+                        <h2>Analyze dependencies</h2>
+                        <p class="subtitle">Use the current project files or upload replacement text files.</p>
+                    </div>
+                </div>
+
+                <form id="analysis-form" class="upload-panel">
+                    <label class="file-field">
+                        <span class="field-title">Dependency graph file</span>
+                        <span class="field-description">Optional · dependencies.txt</span>
+                        <input type="file" id="dependencies-file" name="dependencies"
+                               accept=".txt,text/plain">
+                        <span class="file-hint" id="dependencies-name">Using existing project file</span>
+                    </label>
+
+                    <label class="file-field">
+                        <span class="field-title">Package versions for OSV</span>
+                        <span class="field-description">Optional · osv_packages.txt</span>
+                        <input type="file" id="packages-file" name="packages"
+                               accept=".txt,text/plain">
+                        <span class="file-hint" id="packages-name">Using existing project file</span>
+                    </label>
+
+                    <div class="form-actions">
+                        <p>Leave both uploads empty to analyze the current project files.</p>
+                        <button type="submit" id="analyze-button" class="primary-button">
+                            Run analysis <span>→</span>
+                        </button>
+                    </div>
+                </form>
+                <div id="message" class="message" role="status" aria-live="polite"></div>
+            </section>
+
+            <section class="section" id="results">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">RESULTS</p>
+                        <h2>Analysis overview</h2>
+                    </div>
+                    <span class="result-label" id="result-status">Waiting for analysis</span>
+                </div>
+
+                <div class="metric-grid">
+                    <article class="metric-card">
+                        <span class="metric-icon blue">◇</span>
+                        <p>Packages checked</p>
+                        <strong id="metric-packages">—</strong>
+                        <small>OSV package queries</small>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon red">!</span>
+                        <p>Vulnerability records</p>
+                        <strong id="metric-vulnerabilities">—</strong>
+                        <small>Records reported by OSV</small>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon amber">↗</span>
+                        <p>Failed queries</p>
+                        <strong id="metric-failed">—</strong>
+                        <small>API query failures</small>
+                    </article>
+                    <article class="metric-card">
+                        <span class="metric-icon green">✓</span>
+                        <p>Successful queries</p>
+                        <strong id="metric-successful">—</strong>
+                        <small>Completed OSV queries</small>
+                    </article>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">PACKAGE INTELLIGENCE</p>
+                        <h2>Risk report</h2>
+                        <p class="subtitle">Package-level scores calculated by your C++ engine.</p>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Package</th>
+                                <th>Version</th>
+                                <th>Vulnerabilities</th>
+                                <th>Risk</th>
+                                <th>Trust</th>
+                            </tr>
+                        </thead>
+                        <tbody id="risk-table">
+                            <tr><td colspan="5" class="empty-state">Run an analysis to view results.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p class="footnote">Risk and trust are demonstration heuristics, not calibrated security ratings.</p>
+            </section>
+
+            <section class="section" id="report">
+                <div class="section-heading">
+                    <div>
+                        <p class="eyebrow">ENGINE OUTPUT</p>
+                        <h2>Full analysis report</h2>
+                        <p class="subtitle">Graph traversal, OSV details, heap ranking, sorting, searching and other DSA output.</p>
+                    </div>
+                    <button id="copy-report" class="secondary-button" type="button" disabled>
+                        Copy report
+                    </button>
+                </div>
+                <pre id="full-report" class="report-output">Your C++ analysis output will appear here.</pre>
+            </section>
+
+            <footer>
+                SecureLens · C++ Analysis Engine · Flask API · OSV vulnerability data
+            </footer>
+        </main>
+    </div>
+</body>
+</html>
