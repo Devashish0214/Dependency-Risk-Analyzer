@@ -1,156 +1,220 @@
-\# Dependency Risk Analyzer
+# Dependency Risk Analyzer
 
+A C++ Data Structures and Algorithms (DSA) project that analyzes software dependencies, checks package versions against the Open Source Vulnerabilities (OSV) database, and presents dependency risk information through a web dashboard.
 
+## Overview
 
-A Data Structures and Algorithms project that analyzes software dependency relationships and checks package versions for known security vulnerabilities using the OSV (Open Source Vulnerabilities) API.
+Modern applications use external libraries and packages. These dependencies can contain known security vulnerabilities or introduce risks through their dependency relationships.
 
+The Dependency Risk Analyzer combines graph traversal, hashing, heaps, sorting, searching, and vulnerability data from the OSV API to help users inspect their software dependencies.
 
+**Important:** Risk scores are generated using a simple educational heuristic. They are not official security ratings or a substitute for a professional security audit.
 
-\## Features
+## Features
 
+- **Dependency graph:** Represents relationships between software components.
+- **Breadth-First Search (BFS):** Traverses dependencies level by level.
+- **Depth-First Search (DFS):** Explores dependency paths using recursive traversal.
+- **Dependency tree:** Helps illustrate relationships between dependencies.
+- **Hash table:** Supports efficient lookup and storage of dependency information.
+- **Max heap:** Ranks dependencies by their calculated risk scores.
+- **Sorting and searching:** Organizes and locates dependency records.
+- **Stack and queue:** Demonstrates additional fundamental data structures.
+- **OSV API integration:** Queries known vulnerability information for specified package versions.
+- **Risk and trust scores:** Calculates illustrative scores from vulnerability counts and dependency depth.
+- **Web dashboard:** Provides an interface for uploading inputs and reviewing analysis results.
+- **Input validation:** Rejects malformed or empty input files where validation applies.
 
+## Technology Stack
 
-\- \*\*Dependency Graph:\*\* Represents relationships between software packages using a directed graph.
+| Component | Technology |
+|---|---|
+| Core analyzer | C++17 |
+| Data structures | Graph, hash table, max heap, stack, queue |
+| Vulnerability information | OSV API |
+| Backend | Python and Flask |
+| Frontend | HTML, CSS, JavaScript |
+| Compiler | GCC / MinGW-compatible compiler |
+| Platform | Windows |
 
-\- \*\*BFS and DFS:\*\* Traverses the dependency graph using Breadth-First Search and Depth-First Search.
+## Project Structure
 
-\- \*\*Risk Analysis:\*\* Calculates heuristic dependency risk and trust scores.
+```text
+DependencyRiskAnalyzer/
+├── backend/
+│   └── app.py
+├── data/
+│   ├── dependencies.txt
+│   └── osv_packages.txt
+├── frontend/
+│   ├── index.html
+│   ├── style.css
+│   └── app.js
+├── include/
+│   ├── Graph.h
+│   ├── DependencyNode.h
+│   ├── HashTable.h
+│   ├── MaxHeap.h
+│   ├── OsvClient.h
+│   ├── Queue.h
+│   ├── RiskEngine.h
+│   ├── Searching.h
+│   ├── Sorting.h
+│   └── Stack.h
+├── src/
+│   ├── Graph.cpp
+│   ├── DependencyNode.cpp
+│   ├── HashTable.cpp
+│   ├── MaxHeap.cpp
+│   ├── OsvClient.cpp
+│   ├── Queue.cpp
+│   ├── RiskEngine.cpp
+│   ├── Searching.cpp
+│   ├── Sorting.cpp
+│   └── Stack.cpp
+├── tests/
+│   ├── sample_inputs/
+│   └── ...
+├── main.cpp
+├── analyzer.exe
+├── requirements.txt
+└── README.md
+```
 
-\- \*\*OSV Integration:\*\* Queries known vulnerability information for specified package versions.
+The exact files present in a checkout may differ. The compiled executable is ignored by Git in this repository, so a fresh clone may need to compile it before running the dashboard.
 
-\- \*\*Data Structures:\*\* Demonstrates graphs, queues, stacks, hash tables, heaps, sorting, and searching.
+## Input Files
 
-\- \*\*Web Dashboard:\*\* Provides a frontend connected to a Python Flask backend and the C++ analyzer.
+### 1. Dependency relationships
 
-\- \*\*Project Deliverables:\*\* Includes architecture documentation, a presentation, and a project report.
+File: `data/dependencies.txt`
 
-
-
-\## Technology Stack
-
-
-
-\- C++17
-
-\- Python and Flask
-
-\- HTML, CSS, and JavaScript
-
-\- OSV API
-
-\- Git and GitHub
-
-
-
-\## Project Architecture
-
-
-
-1\. The frontend accepts input and displays analysis results.
-
-2\. The Flask backend validates input and runs the C++ analyzer.
-
-3\. The C++ engine processes dependency relationships using data structures and algorithms.
-
-4\. The OSV client queries vulnerability information for specified package versions.
-
-5\. The results are returned for reporting and visualization.
-
-
-
-\## Input Files
-
-
-
-\### `data/dependencies.txt`
-
-
-
-Contains directed dependency relationships, one per line.
-
-
+Each line contains two names: a parent component followed by its dependency.
 
 Example:
 
-
-
 ```text
-
 Project React
-
 Project Express
-
 React Axios
-
 React Lodash
-
 Express Lodash
-
 Axios OpenSSL
-
 ```
 
+This input defines the graph used for dependency traversal.
 
+### 2. Package versions for vulnerability checks
 
-Each line represents an edge from the first package to the second.
+File: `data/osv_packages.txt`
 
+Each line contains three fields:
 
-
-\### `data/osv\_packages.txt`
-
-
-
-Contains the ecosystem, package name, and version to query.
-
-
+```text
+ecosystem package version
+```
 
 Example:
 
-
-
 ```text
-
 npm lodash 4.17.20
-
 npm axios 0.21.0
-
 npm express 4.17.1
-
 ```
 
+The package-version file is separate from the graph file because the graph describes dependency relationships, while the package-version file identifies specific releases to query against OSV.
 
+## Risk Calculation
 
-The graph input and vulnerability-query input are separate because they represent different information.
+The current educational heuristic is:
 
+```text
+Risk Score = min(100, vulnerabilities × 25 + dependency depth × 5)
+Trust Score = 100 - Risk Score
+```
 
+The scores are capped between 0 and 100 by the current formula.
 
-\## Limitations
+These values are illustrative. The formula does not account for all factors used in real-world security assessments, such as exploitability, severity, reachability, or whether a vulnerable code path is used.
 
+## Requirements
 
+- Windows
+- Python installed
+- Flask, installed using `requirements.txt`
+- A C++17-compatible GCC compiler if rebuilding the analyzer
+- `curl.exe` available on PATH for the current OSV integration
+- Internet connectivity for OSV vulnerability queries
 
-\- The sample dependency graph is manually provided and is not automatically generated from a package lockfile.
+The prebuilt `analyzer.exe` is Windows-specific. Other operating systems may require changes to the backend and API invocation code.
 
-\- Risk scores are heuristic estimates, not certified security ratings.
+## Run the Web Dashboard
 
-\- No matching OSV record does not guarantee that a package is secure.
+Open Command Prompt (CMD) in the project directory.
 
-\- Results depend on the supplied package versions and available vulnerability information.
+### 1. Install Python dependencies
 
+If you already have the project's virtual environment, run:
 
+```cmd
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
 
-\## Project Deliverables
+For a fresh checkout without a virtual environment, create one first:
 
+```cmd
+python -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
 
+### 2. Start the backend
 
-See `DependencyRiskAnalyzer\_Deliverables/` for the architecture diagram, presentation, and project report.
+```cmd
+.venv\Scripts\python.exe backend\app.py
+```
 
+Keep this Command Prompt window open while using the dashboard.
 
+### 3. Open the dashboard
 
-\## Disclaimer
+Visit:
 
+http://127.0.0.1:5000
 
+Upload the dependency relationship file and package-version file, then run the analysis.
 
-This is an educational project intended to demonstrate data structures, dependency analysis, and vulnerability lookup. It does not guarantee software security.
+## Compile the C++ Analyzer
 
+If the executable is missing or you want to rebuild it, use a C++17-compatible compiler. The following example uses the MSYS2 UCRT64 compiler installed at the specified Windows path:
 
+```cmd
+C:\msys64\ucrt64\bin\g++.exe -std=c++17 main.cpp src\Graph.cpp src\DependencyNode.cpp src\HashTable.cpp src\MaxHeap.cpp src\OsvClient.cpp src\Queue.cpp src\RiskEngine.cpp src\Searching.cpp src\Sorting.cpp src\Stack.cpp -I include -o analyzer.exe
+```
 
+Run this command from the project root. If compilation fails, check that all listed source files and headers exist and that the compiler is installed at that path.
+
+## Testing
+
+The repository includes C++ test sources and sample input files. The `tests/sample_inputs` directory contains examples for testing empty and malformed inputs.
+
+The web backend can also be tested by uploading valid and invalid files through the dashboard or by sending requests to its analysis endpoint.
+
+## Limitations
+
+- OSV results depend on the package ecosystem, package name, version, database coverage, and API availability.
+- A successful query with no matching records does not prove that a package is secure.
+- Vulnerability counts are not necessarily equivalent to the number of unique vulnerabilities affecting the entire application.
+- The risk and trust scores are heuristic educational indicators, not certified security measurements.
+- The current backend and prebuilt executable target Windows.
+
+## Future Improvements
+
+- Add severity-aware scoring using vulnerability metadata.
+- Improve dependency version resolution and transitive dependency discovery.
+- Add automated unit and integration tests.
+- Provide exportable reports and historical comparisons.
+- Add configurable risk policies and improved error reporting.
+
+## Disclaimer
+
+This project is intended for educational and research purposes. It helps demonstrate data structures and dependency analysis; it does not replace professional security scanning or an independent security review.

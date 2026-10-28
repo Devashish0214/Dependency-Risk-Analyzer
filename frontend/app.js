@@ -20,7 +20,32 @@ function showMessage(text, type = "info") {
 function setMetric(id, value) {
     document.getElementById(id).textContent = String(value);
 }
+function clearResults() {
+    // Clear the previous analysis report.
+    latestReport = "";
+    reportOutput.textContent = "No analysis results available.";
 
+    // Reset metrics so old results are not shown after a failure.
+    setMetric("metric-packages", "—");
+    setMetric("metric-vulnerabilities", "—");
+    setMetric("metric-failed", "—");
+    setMetric("metric-successful", "—");
+
+    // Clear the previous package risk table.
+    const table = document.getElementById("risk-table");
+    table.replaceChildren();
+
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 5;
+    cell.className = "empty-state";
+    cell.textContent = "Run a successful analysis to view package risks.";
+    row.appendChild(cell);
+    table.appendChild(row);
+
+    // Disable copying because there is no valid report.
+    copyButton.disabled = true;
+}
 function parseInteger(text) {
     const match = text.match(/:\s*(\d+)/);
     return match ? Number(match[1]) : 0;
@@ -240,6 +265,9 @@ packagesInput.addEventListener("change", () => {
 
 form.addEventListener("submit", async event => {
     event.preventDefault();
+
+    // Remove results from the previous analysis.
+    clearResults();
 
     analyzeButton.disabled = true;
     analyzeButton.textContent = "Analyzing...";
