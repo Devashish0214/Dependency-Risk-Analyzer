@@ -129,7 +129,7 @@ The package-version file is separate from the graph file because the graph descr
 The current educational heuristic is:
 
 ```text
-Risk Score = min(100, vulnerabilities × 25 + dependency depth × 5)
+Risk Score = min(100, vulnerabilities * 25 + dependency depth * 5)
 Trust Score = 100 - Risk Score
 ```
 
