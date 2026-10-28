@@ -185,14 +185,13 @@ Upload the dependency relationship file and package-version file, then run the a
 
 ## Compile the C++ Analyzer
 
-If the executable is missing or you want to rebuild it, use a C++17-compatible compiler. The following example uses the MSYS2 UCRT64 compiler installed at the specified Windows path:
+Install a C++17-compatible GCC compiler and ensure `g++` is available
+from Command Prompt.
+
+From the project root, build the analyzer using:
 
 ```cmd
-C:\msys64\ucrt64\bin\g++.exe -std=c++17 main.cpp src\Graph.cpp src\DependencyNode.cpp src\HashTable.cpp src\MaxHeap.cpp src\OsvClient.cpp src\Queue.cpp src\RiskEngine.cpp src\Searching.cpp src\Sorting.cpp src\Stack.cpp -I include -o analyzer.exe
-```
-
-Run this command from the project root. If compilation fails, check that all listed source files and headers exist and that the compiler is installed at that path.
-
+mingw32-make -B
 ## Testing
 
 The repository includes C++ test sources and sample input files. The `tests/sample_inputs` directory contains examples for testing empty and malformed inputs.

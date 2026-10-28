@@ -1,4 +1,4 @@
-CXX = C:/msys64/ucrt64/bin/g++.exe
+CXX = g++
 CXXFLAGS = -std=c++17 -Wall -Wextra -I include
 
 TARGET = analyzer.exe
