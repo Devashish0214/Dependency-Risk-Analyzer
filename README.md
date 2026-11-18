@@ -275,6 +275,23 @@ These files can be used to check normal and invalid input scenarios through the 
 
 ## 12. Limitations
 
+Install a C++17-compatible GCC compiler and ensure `g++` is available from Command Prompt.
+
+From the project root, run:
+
+```cmd
+mingw32-make -B
+```
+
+Alternatively, compile the analyzer directly using the command documented in the project build instructions.
+
+## Testing
+The repository includes C++ test sources and sample input files. The `tests/sample_inputs` directory contains examples for testing empty and malformed inputs.
+
+The web backend can also be tested by uploading valid and invalid files through the dashboard or by sending requests to its analysis endpoint.
+
+## Limitations
+
 - OSV results depend on the package ecosystem, package name, version, database coverage, and API availability.
 - A successful query with no matching records does not prove that a package is secure.
 - Vulnerability counts are not necessarily equivalent to the number of unique vulnerabilities affecting the entire application.
