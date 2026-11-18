@@ -1,0 +1,7 @@
+Project Vue
+Project Vite
+Vue Dayjs
+Vue Pinia
+Vite Rollup
+Pinia Dayjs
+Rollup Esbuild

@@ -1,0 +1,6 @@
+npm vue 3.4.21
+npm vite 5.2.8
+npm dayjs 1.11.10
+npm pinia 2.1.7
+npm rollup 4.13.0
+npm esbuild 0.20.2
